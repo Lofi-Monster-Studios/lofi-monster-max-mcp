@@ -133,7 +133,7 @@ The AI client should list 7 available tools:
 | `max_create_object` | Create a Max object |
 | `max_wire_objects` | Connect two objects with a patch cord |
 | `max_remove_object` | Remove an object |
-| `import_figma_ui` | Batch import Z-sorted UI elements |
+| `batch_create_ui` | Batch create Z-sorted UI elements |
 | `inject_engine_code` | Load a .js file into a v8/js object |
 | `map_live_api` | Map a Live API parameter |
 

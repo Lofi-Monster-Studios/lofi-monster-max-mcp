@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "lofi-monster": {
+      "command": "node",
+      "args": ["E:/MAAX MCP/dist/index.js"]
+    }
+  }
+}

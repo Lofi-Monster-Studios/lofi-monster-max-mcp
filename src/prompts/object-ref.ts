@@ -55,7 +55,7 @@ export function register(server: McpServer) {
       const sections: string[] = [];
 
       if (cat === "all" || cat === "ui") {
-        sections.push(`## UI Objects (for Figma import)\n${UI_TABLE}`);
+        sections.push(`## UI Objects (for batch_create_ui)\n${UI_TABLE}`);
       }
       if (cat === "all" || cat === "dsp") {
         sections.push(`## DSP Objects\n${DSP_TABLE}`);
@@ -70,7 +70,7 @@ export function register(server: McpServer) {
             role: "user" as const,
             content: {
               type: "text" as const,
-              text: `Max/MSP Object Reference — use these class names with max_create_object and import_figma_ui tools.\n\n${sections.join("\n\n")}\n\nNotes:\n- Use live.* classes for Max for Live device UIs\n- DSP objects end with ~ (tilde) for audio-rate processing\n- newdefault ignores width/height — always follow up with patching_rect`,
+              text: `Max/MSP Object Reference — use these class names with max_create_object and batch_create_ui tools.\n\n${sections.join("\n\n")}\n\nNotes:\n- Use live.* classes for Max for Live device UIs\n- DSP objects end with ~ (tilde) for audio-rate processing\n- newdefault ignores width/height — always follow up with patching_rect`,
             },
           },
         ],

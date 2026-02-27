@@ -3,14 +3,14 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 export function register(server: McpServer) {
   server.prompt(
     "figma-guide",
-    "Reference for the Figma Z-index protocol used by import_figma_ui",
+    "Reference for the Z-index protocol used by batch_create_ui",
     async () => ({
       messages: [
         {
           role: "user" as const,
           content: {
             type: "text" as const,
-            text: `When importing Figma UI layouts into Max via the import_figma_ui tool, follow this Z-index protocol.
+            text: `When creating UI layouts in Max via the batch_create_ui tool, follow this Z-index protocol.
 
 ## Why Z-Order Matters
 In Max/MSP, visual stacking order is determined by creation order. First created = bottom of stack. Last created = on top. There is no CSS z-index — the only control is creation sequence.

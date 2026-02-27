@@ -75,7 +75,7 @@ Output: Array of Figma layer objects (sorted ascending by prefix)
 ```typescript
 // src/utils/z-sort.ts
 
-interface FigmaLayer {
+interface UILayer {
   name: string;
   class: string;
   x: number;
@@ -88,7 +88,7 @@ interface FigmaLayer {
 const PREFIX_REGEX = /^(\d+)_/;
 const DEFAULT_PREFIX = 50;
 
-export function sortByZIndex(layers: FigmaLayer[]): FigmaLayer[] {
+export function sortByZIndex(layers: UILayer[]): UILayer[] {
   return [...layers].sort((a, b) => {
     const prefixA = extractPrefix(a.name);
     const prefixB = extractPrefix(b.name);
@@ -120,7 +120,7 @@ The Max daemon handles:
 ### Data Flow
 
 ```
-1. AI calls import_figma_ui({ layers: [...unsorted...] })
+1. AI calls batch_create_ui({ layers: [...unsorted...] })
 2. MCP Server: z-sort.ts sorts layers by prefix (ascending)
 3. MCP Server: bridge.ts sends ONE OSC message to /lofi/ui
    └─ Payload: { "layers": [...sorted array...] }
@@ -224,7 +224,7 @@ The Figma Z-Index Plugin (Phase 6) automates this naming convention:
    - Next → `10_`
    - Next → `20_`
    - etc. (step size configurable, default 10)
-4. Plugin exports a JSON manifest matching the `import_figma_ui` tool schema
+4. Plugin exports a JSON manifest matching the `batch_create_ui` tool schema
 5. The AI (or user) feeds this JSON directly to the MCP tool
 
 This means designers **never need to manually add prefixes** — the plugin handles it automatically based on Figma's native layer ordering.

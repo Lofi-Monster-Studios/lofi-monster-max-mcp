@@ -102,7 +102,7 @@ All addresses use the `/lofi/` prefix.
 | `/lofi/create` | MCP → Max | Create a single Max object | `{ id, class, x, y, args? }` |
 | `/lofi/wire` | MCP → Max | Connect two objects via patchcord | `{ sourceId, outlet, destId, inlet }` |
 | `/lofi/remove` | MCP → Max | Remove an object from the patcher | `{ id }` |
-| `/lofi/ui` | MCP → Max | Batch import Z-sorted UI elements | `{ layers: [...] }` |
+| `/lofi/ui` | MCP → Max | Batch create Z-sorted UI elements | `{ layers: [...] }` |
 | `/lofi/inject` | MCP → Max | Load a .js file into a v8/js object | `{ targetId, filePath }` |
 | `/lofi/map` | MCP → Max | Map a Live API parameter | `{ parameter, objectId, property }` |
 
@@ -168,7 +168,7 @@ Removes the object from the target patcher and deletes it from the registry.
 ```json
 {
   "layers": [
-    { "name": "00_bg_panel", "class": "live.panel", "x": 0, "y": 0, "width": 600, "height": 400, "args": [] },
+    { "name": "00_bg_panel", "class": "live.panel", "x": 0, "y": 0, "width": 600, "height": 400, "args": [], "attrs": { "bgcolor": [0.2, 0.2, 0.2, 1.0] } },
     { "name": "10_rate_dial", "class": "live.dial", "x": 50, "y": 100, "width": 60, "height": 80, "args": [] },
     { "name": "20_depth_dial", "class": "live.dial", "x": 150, "y": 100, "width": 60, "height": 80, "args": [] }
   ]
@@ -179,7 +179,7 @@ Removes the object from the target patcher and deletes it from the registry.
 - The `layers` array MUST be pre-sorted by Z-index prefix (ascending) on the MCP server side before sending
 - The entire array is sent as **one single OSC message** — never as sequential messages (UDP drops packets)
 - The daemon iterates locally using a global `Task` with 20ms spacing to respect Max's UI thread
-- After `newdefault`, the daemon applies `patching_rect` (since `newdefault` ignores width/height) and enables Presentation Mode
+- After `newdefault`, the daemon applies `patching_rect` (since `newdefault` ignores width/height), enables Presentation Mode, and applies any optional `attrs` (bgcolor, textcolor, fontsize, etc.)
 
 ### `/lofi/inject`
 ```json

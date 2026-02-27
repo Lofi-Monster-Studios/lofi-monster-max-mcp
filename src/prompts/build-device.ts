@@ -20,8 +20,8 @@ Follow this exact build order — each step depends on the previous:
 Call \`init_device\` with deviceName: "${deviceName}"
 This creates a [p ${deviceName}] subpatcher via the subpatcher method (NOT new Patcher — that is forbidden in Max JS). The device window will open so you can watch the build happen live.
 
-## Step 2: Import UI Layout
-Call \`import_figma_ui\` with the layers array. Layers MUST use Z-index prefixes:
+## Step 2: Create UI Layout
+Call \`batch_create_ui\` with the layers array. Layers MUST use Z-index prefixes:
 - 00-09: Background panels (created first = bottom of visual stack)
 - 10-29: Structural elements (dividers, sections)
 - 30-49: Controls (dials, sliders, buttons)

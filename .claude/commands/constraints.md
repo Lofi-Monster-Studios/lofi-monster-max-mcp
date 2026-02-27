@@ -5,7 +5,7 @@ Max JS does not support direct patcher instantiation. This is the #1 LLM halluci
 CORRECT: this.patcher.newdefault(10, 10, "p", deviceName) then .subpatcher()
 
 ## 2. UDP Packet Dropping
-Never send sequential OSC messages for batch operations. The import_figma_ui tool sends the entire sorted array as ONE JSON payload. Max iterates locally with a timed Task.
+Never send sequential OSC messages for batch operations. The batch_create_ui tool sends the entire sorted array as ONE JSON payload. Max iterates locally with a timed Task.
 
 ## 3. No Max route Object
 The udpreceive connects directly to the v8 object. OSC addresses arrive via anything() as messagename. No route object is needed or wanted.

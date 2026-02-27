@@ -1,4 +1,4 @@
-When importing Figma UI layouts into Max via the import_figma_ui tool, follow this Z-index protocol.
+When creating UI layouts in Max via the batch_create_ui tool, follow this Z-index protocol.
 
 ## Why Z-Order Matters
 In Max/MSP, visual stacking order is determined by creation order. First created = bottom of stack. Last created = on top. There is no CSS z-index — the only control is creation sequence.

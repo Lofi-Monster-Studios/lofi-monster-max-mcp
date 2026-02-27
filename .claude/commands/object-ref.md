@@ -1,4 +1,4 @@
-Max/MSP Object Reference — use these class names with max_create_object and import_figma_ui tools.
+Max/MSP Object Reference — use these class names with max_create_object and batch_create_ui tools.
 
 ## UI Objects (for Figma import)
 | Class         | Description                    |

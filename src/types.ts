@@ -12,8 +12,8 @@ export interface MaxResponse {
   parameter?: string;
 }
 
-/** A single Figma UI layer for import */
-export interface FigmaLayer {
+/** A single UI layer for batch creation */
+export interface UILayer {
   name: string;
   class: string;
   x: number;
@@ -21,6 +21,7 @@ export interface FigmaLayer {
   width: number;
   height: number;
   args?: any[];
+  attrs?: Record<string, any>;
 }
 
 /** OSC port configuration */

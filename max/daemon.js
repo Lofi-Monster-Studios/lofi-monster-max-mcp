@@ -85,6 +85,18 @@ function handleUI(payload) {
             obj.message("presentation", 1);
             obj.message("presentation_rect", layer.x, layer.y, layer.width, layer.height);
 
+            // Apply optional attributes (bgcolor, textcolor, fontsize, etc.)
+            var attrs = layer.attrs || {};
+            var keys = Object.keys(attrs);
+            for (var k = 0; k < keys.length; k++) {
+                var val = attrs[keys[k]];
+                if (Array.isArray(val)) {
+                    obj.message(keys[k], val);
+                } else {
+                    obj.message(keys[k], val);
+                }
+            }
+
             registry[layer.name] = obj;
             i++;
             uiTask.schedule(20); // 20ms spacing for the UI thread

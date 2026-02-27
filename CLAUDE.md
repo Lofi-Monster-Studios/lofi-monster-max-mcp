@@ -37,7 +37,8 @@ Detailed schemas and protocols live in `mcp_docs/`:
 - All tool files live in `src/tools/` and export a `register(server: McpServer)` function
 - OSC addresses always start with `/lofi/`
 - Max object IDs are user-defined strings stored in the daemon's `registry` object
-- The `import_figma_ui` tool sorts layers by Z-index prefix before sending to Max
+- The `batch_create_ui` tool sorts layers by Z-index prefix before sending to Max
+- UI layers support optional `attrs` (bgcolor, textcolor, fontsize, etc.) applied via `obj.message(key, value)`
 - The entire sorted layer array is sent as ONE OSC message (never sequential UDP)
 - Always run `npm run build` before testing changes
 

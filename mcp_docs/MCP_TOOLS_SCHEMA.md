@@ -14,7 +14,7 @@ Each tool validates its input using Zod schemas, translates the validated input 
 | `max_create_object` | `/lofi/create` | Create a Max object |
 | `max_wire_objects` | `/lofi/wire` | Connect two objects |
 | `max_remove_object` | `/lofi/remove` | Remove an object |
-| `import_figma_ui` | `/lofi/ui` | Batch import Z-sorted UI elements |
+| `batch_create_ui` | `/lofi/ui` | Batch create Z-sorted UI elements |
 | `inject_engine_code` | `/lofi/inject` | Load a .js file into a v8/js object |
 | `map_live_api` | `/lofi/map` | Map a Live API parameter |
 
@@ -181,9 +181,9 @@ Remove an object from the target patcher and delete it from the daemon registry.
 
 ---
 
-### `import_figma_ui`
+### `batch_create_ui`
 
-Import a batch of UI elements from Figma layer data. The MCP server sorts the layers by Z-index prefix and sends the entire sorted array as a **single OSC message**. The Max daemon iterates locally using a timed task.
+Batch create Z-sorted UI elements in the target device patcher. The MCP server sorts the layers by Z-index prefix and sends the entire sorted array as a **single OSC message**. The Max daemon iterates locally using a timed task.
 
 **Zod Schema:**
 ```typescript
@@ -196,19 +196,20 @@ Import a batch of UI elements from Figma layer data. The MCP server sorts the la
     width: z.number().describe("Width in pixels (applied via patching_rect after creation)"),
     height: z.number().describe("Height in pixels (applied via patching_rect after creation)"),
     args: z.array(z.any()).optional().default([]).describe("Initialization arguments"),
-  })).describe("Array of Figma layers — will be sorted by Z-index prefix before sending to Max"),
+    attrs: z.record(z.any()).optional().describe("Object attributes to set after creation (e.g. { bgcolor: [0.2, 0.2, 0.2, 1.0], textcolor: [1, 1, 1, 1] })"),
+  })).describe("Array of UI layers — will be sorted by Z-index prefix before sending to Max"),
 }
 ```
 
 **Example Call:**
 ```json
 {
-  "name": "import_figma_ui",
+  "name": "batch_create_ui",
   "arguments": {
     "layers": [
       { "name": "50_rate_dial", "class": "live.dial", "x": 50, "y": 100, "width": 60, "height": 80, "args": [] },
-      { "name": "00_bg_panel", "class": "live.panel", "x": 0, "y": 0, "width": 600, "height": 400, "args": [] },
-      { "name": "75_label_rate", "class": "comment", "x": 55, "y": 185, "width": 50, "height": 20, "args": ["Rate"] }
+      { "name": "00_bg_panel", "class": "live.panel", "x": 0, "y": 0, "width": 600, "height": 400, "args": [], "attrs": { "bgcolor": [0.2, 0.2, 0.2, 1.0] } },
+      { "name": "75_label_rate", "class": "comment", "x": 55, "y": 185, "width": 50, "height": 20, "args": ["Rate"], "attrs": { "textcolor": [1, 1, 1, 1] } }
     ]
   }
 }
@@ -218,9 +219,9 @@ Import a batch of UI elements from Figma layer data. The MCP server sorts the la
 ```json
 {
   "layers": [
-    { "name": "00_bg_panel", "class": "live.panel", "x": 0, "y": 0, "width": 600, "height": 400, "args": [] },
+    { "name": "00_bg_panel", "class": "live.panel", "x": 0, "y": 0, "width": 600, "height": 400, "args": [], "attrs": { "bgcolor": [0.2, 0.2, 0.2, 1.0] } },
     { "name": "50_rate_dial", "class": "live.dial", "x": 50, "y": 100, "width": 60, "height": 80, "args": [] },
-    { "name": "75_label_rate", "class": "comment", "x": 55, "y": 185, "width": 50, "height": 20, "args": ["Rate"] }
+    { "name": "75_label_rate", "class": "comment", "x": 55, "y": 185, "width": 50, "height": 20, "args": ["Rate"], "attrs": { "textcolor": [1, 1, 1, 1] } }
   ]
 }
 ```
@@ -235,7 +236,8 @@ Import a batch of UI elements from Figma layer data. The MCP server sorts the la
 2. Each layer: `targetPatcher.newdefault(x, y, class, ...args)`
 3. Then: `obj.message("patching_rect", x, y, width, height)` — forces size (newdefault ignores dimensions)
 4. Then: `obj.message("presentation", 1)` and `obj.message("presentation_rect", x, y, width, height)` — enables Presentation Mode
-5. Stores in registry using layer name as ID
+5. Then: applies any `attrs` via `obj.message(key, value)` — e.g. bgcolor, textcolor, fontsize
+6. Stores in registry using layer name as ID
 
 ---
 

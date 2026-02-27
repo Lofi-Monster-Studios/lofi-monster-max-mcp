@@ -1,16 +1,16 @@
-// Figma Z-Index sorting — see mcp_docs/FIGMA_Z_INDEX_PROTOCOL.md
+// Z-Index sorting — see mcp_docs/FIGMA_Z_INDEX_PROTOCOL.md
 
-import type { FigmaLayer } from "../types.js";
+import type { UILayer } from "../types.js";
 
 const PREFIX_REGEX = /^(\d+)_/;
 const DEFAULT_PREFIX = 50;
 
 /**
- * Sort Figma layers by their numeric Z-index prefix (ascending).
+ * Sort UI layers by their numeric Z-index prefix (ascending).
  * Lowest prefix = created first = bottom of visual stack in Max.
  * Layers without a prefix default to 50 (mid-stack).
  */
-export function sortByZIndex(layers: FigmaLayer[]): FigmaLayer[] {
+export function sortByZIndex(layers: UILayer[]): UILayer[] {
   return [...layers].sort((a, b) => {
     const prefixA = extractPrefix(a.name);
     const prefixB = extractPrefix(b.name);

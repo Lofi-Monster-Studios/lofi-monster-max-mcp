@@ -22,7 +22,7 @@ Max/MSP Daemon (v8 object in LOFI_Daemon.maxpat)
 | `max_create_object` | Create a Max object at specific coordinates |
 | `max_wire_objects` | Connect two objects with a patch cord |
 | `max_remove_object` | Remove an object from the patcher |
-| `import_figma_ui` | Batch import Z-sorted Figma UI layouts |
+| `batch_create_ui` | Batch create Z-sorted UI layouts |
 | `inject_engine_code` | Load a .js file into a v8/js object |
 | `map_live_api` | Map a Live API parameter |
 

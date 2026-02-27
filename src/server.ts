@@ -8,7 +8,7 @@ import { register as registerInitDevice } from "./tools/init-device.js";
 import { register as registerCreateObject } from "./tools/create-object.js";
 import { register as registerWireObjects } from "./tools/wire-objects.js";
 import { register as registerRemoveObject } from "./tools/remove-object.js";
-import { register as registerImportFigmaUi } from "./tools/import-figma-ui.js";
+import { register as registerBatchCreateUi } from "./tools/batch-create-ui.js";
 import { register as registerInjectEngine } from "./tools/inject-engine.js";
 import { register as registerMapLiveApi } from "./tools/map-live-api.js";
 
@@ -33,7 +33,7 @@ export function createServer(): McpServer {
   registerCreateObject(server);
   registerWireObjects(server);
   registerRemoveObject(server);
-  registerImportFigmaUi(server);
+  registerBatchCreateUi(server);
   registerInjectEngine(server);
   registerMapLiveApi(server);
 

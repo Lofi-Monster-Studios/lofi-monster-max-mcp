@@ -5,8 +5,8 @@ import { sortByZIndex } from "../utils/z-sort.js";
 
 export function register(server: McpServer) {
   server.tool(
-    "import_figma_ui",
-    "Batch import Z-sorted UI elements from Figma layer data. Layers are sorted by numeric prefix and sent as a single payload to Max.",
+    "batch_create_ui",
+    "Batch create Z-sorted UI elements in the target device patcher. Layers are sorted by numeric prefix (lowest = bottom of visual stack) and sent as a single payload to Max.",
     {
       layers: z
         .array(
@@ -28,10 +28,14 @@ export function register(server: McpServer) {
               .optional()
               .default([])
               .describe("Initialization arguments"),
+            attrs: z
+              .record(z.any())
+              .optional()
+              .describe("Object attributes to set after creation (e.g. { bgcolor: [0.2, 0.2, 0.2, 1.0], textcolor: [1, 1, 1, 1] })"),
           })
         )
         .describe(
-          "Array of Figma layers — will be sorted by Z-index prefix before sending to Max"
+          "Array of UI layers — sorted by Z-index prefix before sending to Max"
         ),
     },
     async (params) => {
