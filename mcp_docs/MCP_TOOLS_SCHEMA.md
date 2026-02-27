@@ -269,7 +269,7 @@ Load a JavaScript file from disk into a `v8` or `js` object in the target patche
 
 **Expected Response:**
 ```json
-{ "status": "ok", "targetId": "engine", "file": "C:/Users/Shlomo/Projects/Flutter/Flutter_Engine.js" }
+{ "status": "ok", "targetId": "engine", "file": "/path/to/your/project/Flutter_Engine.js" }
 ```
 
 **What happens in Max:**
