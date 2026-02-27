@@ -60,6 +60,27 @@ Create a file at `<MCP_HOME>/.mcp.json`:
 
 This makes the server available only when Claude Code is launched from the project directory.
 
+### Slash Commands (Global Install)
+
+The repo includes 5 slash commands (`/build-device`, `/constraints`, `/figma-guide`, `/object-ref`, `/status`) as Markdown files in `.claude/commands/`.
+
+By default these only work when Claude Code runs from the repo directory. To make them available **globally** in all sessions:
+
+```bash
+# Create the global commands directory if it doesn't exist
+mkdir -p ~/.claude/commands
+
+# Copy all command files
+cp <MCP_HOME>/.claude/commands/*.md ~/.claude/commands/
+```
+
+On Windows (PowerShell):
+
+```powershell
+mkdir -Force "$env:USERPROFILE\.claude\commands"
+Copy-Item "<MCP_HOME>\.claude\commands\*.md" "$env:USERPROFILE\.claude\commands\"
+```
+
 ---
 
 ## Claude Desktop (Windows)

@@ -30,24 +30,29 @@ Max/MSP Daemon (v8 object in LOFI_Daemon.maxpat)
 
 ```bash
 # Clone and build
-git clone https://github.com/solokkhz/lofi-monster-max-mcp.git
+git clone https://github.com/Lofi-Monster-Studios/lofi-monster-max-mcp.git
 cd lofi-monster-max-mcp
 npm install
 npm run build
 
-# Connect to Claude Code
-claude mcp add lofi-monster -- node "/path/to/lofi-monster-max-mcp/dist/index.js"
+# Register MCP server globally (works in all Claude Code sessions)
+claude mcp add lofi-monster -- node "<full-path-to-repo>/dist/index.js"
 
-# Open Max/MSP with the daemon patch
-# Then ask your AI to build a device!
+# Install slash commands globally (optional but recommended)
+# Copy the command files so /build-device, /constraints, etc. work everywhere
+cp .claude/commands/*.md ~/.claude/commands/
+
+# Open Max/MSP with the daemon patch, then ask your AI to build a device!
 ```
 
 ## Setup
 
 1. **Build:** `npm install && npm run build`
-2. **Connect your AI client** — see [Connection Guide](mcp_docs/CONNECTION_GUIDE.md)
-3. **Open Max/MSP** with `max/LOFI_Daemon.maxpat`
-4. **Start building** — ask your AI to call `init_device` with a device name
+2. **Register the MCP server globally:** `claude mcp add lofi-monster -- node "<path>/dist/index.js"`
+3. **Install slash commands globally:** `cp .claude/commands/*.md ~/.claude/commands/`
+4. **Connect other AI clients** (optional) — see [Connection Guide](mcp_docs/CONNECTION_GUIDE.md)
+5. **Open Max/MSP** with `max/LOFI_Daemon.maxpat`
+6. **Start building** — ask your AI to call `init_device` with a device name
 
 ## Documentation
 
@@ -59,7 +64,7 @@ claude mcp add lofi-monster -- node "/path/to/lofi-monster-max-mcp/dist/index.js
 
 ## Claude Code Slash Commands
 
-If using Claude Code, these commands are available:
+These commands are available if you copied them to `~/.claude/commands/` (see Quick Start):
 
 | Command | Purpose |
 |---------|---------|
@@ -68,6 +73,8 @@ If using Claude Code, these commands are available:
 | `/figma-guide` | Z-index protocol reference |
 | `/object-ref` | Max object class cheatsheet |
 | `/status` | Check MCP + Max connection status |
+
+> **Note:** Without the global install step, these commands only work when Claude Code is launched from the repo directory. Run `cp .claude/commands/*.md ~/.claude/commands/` to make them available everywhere.
 
 ## Key Design Decisions
 
