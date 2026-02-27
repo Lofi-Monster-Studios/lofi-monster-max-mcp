@@ -1,0 +1,11 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.env
+.env.local
+.env.*
+*.tgz
+
+# Local Claude settings (user-specific)
+.claude/settings.local.json
