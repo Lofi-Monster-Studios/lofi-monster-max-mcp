@@ -30,7 +30,7 @@ Detailed schemas and protocols live in `mcp_docs/`:
 - `ARCHITECTURE.md` — full data flow, OSC address space, port assignments
 - `MCP_TOOLS_SCHEMA.md` — Zod schemas and JSON-RPC definitions for all 7 tools
 - `MAX_API_CHEATSHEET.md` — verified Max JS API methods (do NOT invent methods not listed here)
-- `FIGMA_Z_INDEX_PROTOCOL.md` — Z-index prefix convention and sorting algorithm
+- `Z_INDEX_PROTOCOL.md` — Z-index prefix convention and sorting algorithm
 
 ## Conventions
 

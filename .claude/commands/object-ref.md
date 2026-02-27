@@ -1,6 +1,6 @@
 Max/MSP Object Reference — use these class names with max_create_object and batch_create_ui tools.
 
-## UI Objects (for Figma import)
+## UI Objects (for batch_create_ui)
 | Class         | Description                    |
 |---------------|--------------------------------|
 | live.panel    | Background panel/rectangle     |

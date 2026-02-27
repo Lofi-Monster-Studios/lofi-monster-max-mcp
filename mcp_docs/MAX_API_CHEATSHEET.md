@@ -275,7 +275,7 @@ obj.message("presentation_rect", x, y, width, height);
 
 ## Common Max Object Classes
 
-### UI Objects (for Figma import)
+### UI Objects (for batch_create_ui)
 | Class | Description |
 |-------|-------------|
 | `live.panel` | Background panel/rectangle |

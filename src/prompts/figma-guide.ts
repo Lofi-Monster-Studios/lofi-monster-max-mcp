@@ -30,7 +30,7 @@ Every layer name must start with a two-digit prefix: {NN}_{descriptive_name}
 ## Sorting Rules
 - Layers are sorted ascending by prefix (lowest = created first = bottom)
 - Unprefixed layers default to 50 (mid-stack)
-- Duplicate prefixes preserve original Figma order (stable sort)
+- Duplicate prefixes preserve original input order (stable sort)
 - Use increments of 5 or 10 between layers for future insertion room
 
 ## Transmission Protocol

@@ -1,4 +1,4 @@
-// Z-Index sorting — see mcp_docs/FIGMA_Z_INDEX_PROTOCOL.md
+// Z-Index sorting — see mcp_docs/Z_INDEX_PROTOCOL.md
 
 import type { UILayer } from "../types.js";
 

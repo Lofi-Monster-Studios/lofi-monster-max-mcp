@@ -2,7 +2,7 @@
 
 A local MCP (Model Context Protocol) bridge that lets AI agents control **Max/MSP** patches in real-time via UDP/OSC.
 
-Build Max for Live devices, import Figma UI layouts, wire DSP chains, and inject engine code — all from your AI coding assistant.
+Build Max for Live devices, create UI layouts, wire DSP chains, and inject engine code — all from your AI coding assistant.
 
 ## Architecture
 
@@ -59,7 +59,7 @@ cp .claude/commands/*.md ~/.claude/commands/
 - [Architecture](mcp_docs/ARCHITECTURE.md) — Full data flow, OSC address space, port assignments
 - [Tools Schema](mcp_docs/MCP_TOOLS_SCHEMA.md) — Zod schemas and JSON-RPC definitions for all 7 tools
 - [Max API Cheatsheet](mcp_docs/MAX_API_CHEATSHEET.md) — Verified Max JS API methods
-- [Figma Z-Index Protocol](mcp_docs/FIGMA_Z_INDEX_PROTOCOL.md) — Z-index prefix convention and sorting
+- [Z-Index Protocol](mcp_docs/Z_INDEX_PROTOCOL.md) — Z-index prefix convention and sorting
 - [Connection Guide](mcp_docs/CONNECTION_GUIDE.md) — Setup for Claude Code, Claude Desktop, and Cursor
 
 ## Claude Code Slash Commands
@@ -79,7 +79,7 @@ These commands are available if you copied them to `~/.claude/commands/` (see Qu
 ## Key Design Decisions
 
 - **Single JSON string per OSC message** — bypasses Max's comma trap that destroys raw JSON
-- **Z-index sorting** — Figma layers sorted by numeric prefix before batch creation (creation order = visual stacking in Max)
+- **Z-index sorting** — UI layers sorted by numeric prefix before batch creation (creation order = visual stacking in Max)
 - **File paths only** — engine code is loaded via `compile` message, never sent as raw text over UDP
 - **Subpatcher method** — devices created via `this.patcher.newdefault(...)` + `.subpatcher()`, never `new Patcher()`
 

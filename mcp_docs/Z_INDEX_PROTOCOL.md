@@ -1,4 +1,4 @@
-# LOFI MONSTER — Figma Z-Index Protocol
+# LOFI MONSTER — Z-Index Protocol
 
 ## Why Z-Order Matters in Max/MSP
 
@@ -13,7 +13,7 @@ If you create a `live.dial` before a `live.panel`, the panel will cover the dial
 
 ## The Prefix Naming Convention
 
-Every Figma layer destined for Max/MSP import must follow this naming pattern:
+Every UI layer destined for Max/MSP import must follow this naming pattern:
 
 ```
 {NN}_{descriptive_name}
@@ -55,8 +55,8 @@ The MCP server sorts layers **before** sending them to Max. This sorting happens
 ### Algorithm
 
 ```
-Input:  Array of Figma layer objects (unsorted)
-Output: Array of Figma layer objects (sorted ascending by prefix)
+Input:  Array of UI layer objects (unsorted)
+Output: Array of UI layer objects (sorted ascending by prefix)
 
 1. For each layer:
    a. Extract prefix using regex: /^(\d+)_/
@@ -65,7 +65,7 @@ Output: Array of Figma layer objects (sorted ascending by prefix)
 
 2. Sort array by prefix in ASCENDING order (lowest first)
 
-3. For layers with identical prefixes: preserve original Figma order (stable sort)
+3. For layers with identical prefixes: preserve original input order (stable sort)
 
 4. Return sorted array
 ```
@@ -137,9 +137,9 @@ The Max daemon handles:
 
 ## Worked Example
 
-### Figma Input (unsorted)
+### Input (unsorted)
 
-A designer has these layers in Figma (in whatever order they happened to create them):
+A set of UI layers (in whatever order they were defined):
 
 ```json
 [
@@ -157,7 +157,7 @@ A designer has these layers in Figma (in whatever order they happened to create 
 [
   { "name": "00_bg_panel", ... },     // prefix 0  → created FIRST (bottom)
   { "name": "30_rate_dial", ... },     // prefix 30 → same prefix as depth_dial
-  { "name": "30_depth_dial", ... },    // prefix 30 → stable sort preserves Figma order
+  { "name": "30_depth_dial", ... },    // prefix 30 → stable sort preserves input order
   { "name": "50_rate_label", ... },    // prefix 50
   { "name": "90_logo", ... }           // prefix 90 → created LAST (top)
 ]
@@ -203,7 +203,7 @@ Valid. `parseInt("00", 10)` returns `0`. This is the absolute bottom of the stac
 { "name": "30_dial_b", ... }
 ```
 
-Both have prefix `30`. JavaScript's `Array.sort()` is stable — original order is preserved. The layer that appeared first in the Figma input stays first.
+Both have prefix `30`. JavaScript's `Array.sort()` is stable — original order is preserved. The layer that appeared first in the input stays first.
 
 ### Single-Digit Prefix
 
@@ -213,25 +213,9 @@ Both have prefix `30`. JavaScript's `Array.sort()` is stable — original order 
 
 The regex `/^(\d+)_/` matches `5_`. `parseInt("5")` returns `5`. This works but is non-standard — always use two digits for consistency.
 
-## Figma Plugin Integration
-
-The Figma Z-Index Plugin (Phase 6) automates this naming convention:
-
-1. Designer selects a frame in Figma
-2. Plugin reads the frame's children in their current Z-order (Figma's native stacking)
-3. Plugin renames each layer with a Z-index prefix based on its position:
-   - Bottom layer → `00_`
-   - Next → `10_`
-   - Next → `20_`
-   - etc. (step size configurable, default 10)
-4. Plugin exports a JSON manifest matching the `batch_create_ui` tool schema
-5. The AI (or user) feeds this JSON directly to the MCP tool
-
-This means designers **never need to manually add prefixes** — the plugin handles it automatically based on Figma's native layer ordering.
-
 ## Rules Summary
 
-1. Every Figma layer MUST have a `{NN}_` prefix for deterministic Z-order
+1. Every UI layer MUST have a `{NN}_` prefix for deterministic Z-order
 2. Layers are sorted ascending (lowest prefix = created first = bottom of stack)
 3. Unprefixed layers default to `50` (mid-stack)
 4. The **entire sorted array** is sent as one OSC message (never sequential UDP)
